@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  nginx:
+    # Image to deploy
+    image: nginx:1.19.2-alpine
+    # Add this container to the ingress network
+    networks:
+      - ingress
+    # Port that the container listens to
+    ports:
+      - 80
+    environment:
+      # Host that the container will use
+      VIRTUAL_HOST: nginx.glacion.com
+      # Port that the container listens to
+      VIRTUAL_PORT: 80
+      # Same host, used for Letsencrypt
+      LETSENCRYPT_HOST: nginx.glacion.com
+      # Notification email for Letsencrypt
+      LETSENCRYPT_EMAIL: info@glacion.com
+
+networks:
+  ingress:
+    # Use the already defined network instead of creating a new one
+    external: true
